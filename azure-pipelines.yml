@@ -35,5 +35,5 @@ steps:
     SqlPassword: '$env:PASSWORD'
     deployType: 'DacpacTask'
     DeploymentAction: 'Import'
-    DacpacFile: '$(Build.Repository.LocalPath)'
+    DacpacFile: '$(Agent.BuildDirectory)'
     IpDetectionMethod: 'AutoDetect'
