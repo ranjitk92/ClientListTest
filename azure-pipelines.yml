@@ -35,5 +35,5 @@ steps:
     SqlPassword: '$env:PASSWORD'
     deployType: 'DacpacTask'
     DeploymentAction: 'Import'
-    DacpacFile: '$(Agent.BuildDirectory)'
+    BacpacFile: 'https://databasetestingrk.blob.core.windows.net/databasetestingblob/AdventureWorks2019.bacpac'
     IpDetectionMethod: 'AutoDetect'
