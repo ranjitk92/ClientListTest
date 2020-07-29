@@ -25,15 +25,11 @@ steps:
       #!/bin/bash
       echo "##vso[task.setvariable variable=clientname;]testvalue"
 
-- task: SqlAzureDacpacDeployment@1
+- task: SqlDacpacDeploymentOnMachineGroup@0
   inputs:
-    azureSubscription: 'Azure subscription 1(a42ec7cd-86ed-431d-be1a-45fd92b2f25b)'
-    AuthenticationType: 'server'
-    ServerName: '$(clientname).database.windows.net'
+    TaskType: 'dacpac'
+    DacpacFile: '**/*.dacpac'
+    TargetMethod: 'server'
+    ServerName: 'localhost'
     DatabaseName: '$(clientname)'
-    SqlUsername: '$env:LOGIN'
-    SqlPassword: '$env:PASSWORD'
-    deployType: 'DacpacTask'
-    DeploymentAction: 'Import'
-    BacpacFile: 'https://databasetestingrk.blob.core.windows.net/databasetestingblob/AdventureWorks2019.bacpac'
-    IpDetectionMethod: 'AutoDetect'
+    AuthScheme: 'windowsAuthentication'
