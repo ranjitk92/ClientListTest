@@ -29,7 +29,7 @@ steps:
   inputs:
     azureSubscription: 'Azure subscription 1(a42ec7cd-86ed-431d-be1a-45fd92b2f25b)'
     AuthenticationType: 'server'
-    ServerName: '$(clientname)'
+    ServerName: '$(clientname).database.windows.net'
     DatabaseName: '$(clientname)'
     SqlUsername: '$env:LOGIN'
     SqlPassword: '$env:PASSWORD'
