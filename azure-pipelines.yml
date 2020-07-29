@@ -27,9 +27,8 @@ steps:
 
 - task: SqlDacpacDeploymentOnMachineGroup@0
   inputs:
-    TaskType: 'dacpac'
-    DacpacFile: '**/*.dacpac'
-    TargetMethod: 'server'
+    TaskType: 'sqlInline'
+    InlineSql: 'CREATE DATABASE [test]'
     ServerName: 'localhost'
-    DatabaseName: '$(clientname)'
+    DatabaseName: 'testdb'
     AuthScheme: 'windowsAuthentication'
