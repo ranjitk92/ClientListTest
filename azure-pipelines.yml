@@ -14,7 +14,7 @@ steps:
 - task: PowerShell@2
   inputs:
     targetType: 'inline'
-    script: '$(Get-Content -Path $(Build.Repository.LocalPath)/ClientListTest.txt)Write-Host "##vso[task.setvariable variable=clientname]"'
+    script: 'Get-Content -Path $(Build.Repository.LocalPath)/ClientListTest.txt$(Write-Host "##vso[task.setvariable variable=clientname]")'
 
 - task: AzureResourceManagerTemplateDeployment@3
   inputs:
