@@ -26,5 +26,5 @@ steps:
     location: 'East US'
     templateLocation: 'URL of the file'
     csmFileLink: 'https://raw.githubusercontent.com/ranjitk92/ARMtemplates/master/azuredeploySQLserver.json'
-    overrideParameters: '-name $(clientname)'
+    overrideParameters: '-SQLname $(clientname)'
     deploymentMode: 'Incremental'
