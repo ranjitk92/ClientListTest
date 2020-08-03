@@ -36,7 +36,7 @@ steps:
     subscriptionId: 'a42ec7cd-86ed-431d-be1a-45fd92b2f25b'
     action: 'Create Or Update Resource Group'
     resourceGroupName: 'RgPStest'
-    location: 'East US'
+    location: 'Central US'
     templateLocation: 'URL of the file'
     csmFileLink: 'https://raw.githubusercontent.com/ranjitk92/ARMtemplates/master/azuredeployDB.json'
     overrideParameters: '-DBname $(clientname)'
