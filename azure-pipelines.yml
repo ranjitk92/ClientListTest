@@ -19,7 +19,7 @@ steps:
 - task: PowerShell@2
   inputs:
     targetType: 'inline'
-    script: 'Import-Excel $(Build.Repository.LocalPath) | Select-Object -ExpandProperty Name'
+    script: 'Import-Excel $(Build.Repository.LocalPath)/ClientListTestExcel.xlsx | Select-Object -ExpandProperty Name'
 - task: PowerShell@2
   inputs:
     targetType: 'inline'
