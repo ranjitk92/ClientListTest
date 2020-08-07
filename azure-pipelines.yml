@@ -1,0 +1,39 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  vmImage: 'windows-latest'
+
+steps:
+
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: 'Install-Module ImportExcel -Scope CurrentUser -Force'
+
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: 'Import-Excel $(Build.Repository.LocalPath)/ClientListTestExcel.xlsx | Select-Object -ExpandProperty Name'
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: '$clientvar = Get-Content -Path $(Build.Repository.LocalPath)/ClientListTest.txt;Write-Host "##vso[task.setvariable variable=clientname]$clientvar"'
+
+- task: AzureResourceManagerTemplateDeployment@3
+  inputs:
+    deploymentScope: 'Resource Group'
+    azureResourceManagerConnection: 'Azure subscription 1(a42ec7cd-86ed-431d-be1a-45fd92b2f25b)'
+    subscriptionId: 'a42ec7cd-86ed-431d-be1a-45fd92b2f25b'
+    action: 'Create Or Update Resource Group'
+    resourceGroupName: 'RgPStest'
+    location: 'East US'
+    templateLocation: 'URL of the file'
+    csmFileLink: 'https://raw.githubusercontent.com/ranjitk92/ARMtemplates/master/azuredeploySQLserverDBandACR.json'
+    overrideParameters: '-SQLname $(clientname) -DBname $(clientname) -ACRname $(clientname)'
+    deploymentMode: 'Incremental'
