@@ -25,5 +25,5 @@ steps:
     location: 'East US'
     templateLocation: 'URL of the file'
     csmFileLink: 'https://raw.githubusercontent.com/ranjitk92/ARMtemplates/master/azuredeploySQLserver_db_storagecontainer.json'
-    overrideParameters: '-SQLname $(clientname) -blobstoragecontainer $(clientname) -storageaccount $(clientname) -clienttag $(clientname)'
+    overrideParameters: '-SQLname $(clientname) -storageaccount $(clientname) -clienttag $(clientname)'
     deploymentMode: 'Incremental'
