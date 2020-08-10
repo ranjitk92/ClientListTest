@@ -24,6 +24,6 @@ steps:
     resourceGroupName: 'RgPStest'
     location: 'East US'
     templateLocation: 'URL of the file'
-    csmFileLink: 'https://raw.githubusercontent.com/ranjitk92/ARMtemplates/master/azuredeploySQLserverDBandACR.json'
-    overrideParameters: '-SQLname $(clientname) -DBname $(clientname) -ACRname $(clientname)'
+    csmFileLink: 'https://raw.githubusercontent.com/ranjitk92/ARMtemplates/master/azuredeploySQLserver_db_storagecontainer.json'
+    overrideParameters: '-SQLname $(clientname) -DBname $(clientname) -blobstoragecontainer $(clientname) -clienttag $(clientname)'
     deploymentMode: 'Incremental'
