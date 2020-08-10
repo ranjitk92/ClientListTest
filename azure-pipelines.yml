@@ -13,8 +13,7 @@ steps:
 - task: PowerShell@2
   inputs:
     targetType: 'inline'
-    script: '$clientvar = Get-Content -Path $(Build.Repository.LocalPath)/ClientListTest.txt;Write-Host "##vso[task.setvariable variable=clientname]$clientvar"'
-
+    script: 'Install-Module ImportExcel -Scope CurrentUser -Force;$clientvar = Import-Excel $(Build.Repository.LocalPath)/ClientTestListExcel.xlsx | Select-Object -ExpandProperty Name;Write-Host "##vso[task.setvariable variable=clientname]$clientvar"'
 - task: AzureResourceManagerTemplateDeployment@3
   inputs:
     deploymentScope: 'Resource Group'
