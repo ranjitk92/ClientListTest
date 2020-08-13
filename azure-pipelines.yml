@@ -13,7 +13,7 @@ steps:
 - task: PowerShell@2
   inputs:
     targetType: 'inline'
-    script: '$clientvariable = @(Get-Content -Path $(Build.Repository.LocalPath)/ClientTestListExcel.xlsx;Write-Host "vso[task.setvariable variable=clientname]$clientvariable")'
+    script: '$clientvariable = Get-Content -Path $(Build.Repository.LocalPath)/ClientTestListExcel.xlsx;Write-Host "vso[task.setvariable variable=clientname]$clientvariable"'
 - task: AzureResourceManagerTemplateDeployment@3
   inputs:
     deploymentScope: 'Resource Group'
