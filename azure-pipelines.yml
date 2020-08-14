@@ -19,7 +19,7 @@ steps:
   displayName: Creating clientname and clientvariable pairing
   inputs:
     targetType: 'inline'
-    script: '$clientvariable = Import-Excel $(Build.Repository.LocalPath)\ClientTestListExcel.xlsx | Select-Object -ExpandProperty Name;Write-Host "vso[task.setvariable variable=clientname]$clientvariable"'
+    script: '$clientvariable = Import-Excel $(Build.Repository.LocalPath)/ClientTestListExcel.xlsx | Select-Object -ExpandProperty Name;Write-Host "vso[task.setvariable variable=clientname]$clientvariable"'
 - task: AzureResourceManagerTemplateDeployment@3
   inputs:
     deploymentScope: 'Resource Group'
