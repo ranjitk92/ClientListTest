@@ -11,6 +11,7 @@ pool:
 
 steps:
 - task: PowerShell@2
+  displayName: Installing ImportExcel
   inputs:
     targetType: 'inline'
     script: 'Install-Module ImportExcel -Scope CurrentUser -Force'
