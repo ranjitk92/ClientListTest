@@ -16,7 +16,19 @@ steps:
     targetType: 'inline'
     script: 'Install-Module ImportExcel -Scope CurrentUser -Force'
 - task: PowerShell@2
+  displayName: Creating clientname and clientvariable pairing
   inputs:
     targetType: 'inline'
     script: '$clientvariable = Import-Excel $(Build.Repository.LocalPath)\ClientTestListExcel.xlsx | Select-Object -ExpandProperty Name;Write-Host "vso[task.setvariable variable=clientname]$clientvariable"'
-
+- task: AzureResourceManagerTemplateDeployment@3
+  inputs:
+    deploymentScope: 'Resource Group'
+    azureResourceManagerConnection: 'Azure subscription 1(a42ec7cd-86ed-431d-be1a-45fd92b2f25b)'
+    subscriptionId: 'a42ec7cd-86ed-431d-be1a-45fd92b2f25b'
+    action: 'Create Or Update Resource Group'
+    resourceGroupName: 'RgPStest'
+    location: 'East US'
+    templateLocation: 'URL of the file'
+    csmFileLink: 'https://raw.githubusercontent.com/ranjitk92/ARMtemplates/master/azuredeploySQLserver_db_storagecontainer.json'
+    overrideParameters: '-SQLname $(clientname) -DBname $(clientname) -blobstoragecontainer $(clientname) -clienttag $(clientname)'
+    deploymentMode: 'Incremental'
