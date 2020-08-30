@@ -13,8 +13,8 @@ steps:
 - task: AzureResourceManagerTemplateDeployment@3
   inputs:
     deploymentScope: 'Resource Group'
-    azureResourceManagerConnection: 'Azure subscription 1(a42ec7cd-86ed-431d-be1a-45fd92b2f25b)'
-    subscriptionId: 'a42ec7cd-86ed-431d-be1a-45fd92b2f25b'
+    azureResourceManagerConnection: 'Azure subscription 1(c731920e-f389-4198-98b9-bb54ff8f6bde)'
+    subscriptionId: 'c731920e-f389-4198-98b9-bb54ff8f6bde'
     action: 'Create Or Update Resource Group'
     resourceGroupName: 'RgPStest'
     location: 'East US'
