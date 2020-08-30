@@ -22,3 +22,21 @@ steps:
     csmFileLink: 'https://raw.githubusercontent.com/ranjitk92/ARMtemplates/master/azuredeploySQLserver_db_storagecontainer.json'
     overrideParameters: '-SQLname $(clientname) -DBname $(clientname) -blobstoragecontainer $(clientname) -clienttag $(clientname)'
     deploymentMode: 'Incremental'
+  
+- task: CmdLine@2
+  displayName: Download DACPAC into Agent.TempDirectory
+  inputs:
+    script: 'cd $(Agent.TempDirectory);curl -OL https://github.com/ranjitk92/TemplateDACPACTest/raw/master/basicdatabase.dacpac'
+  
+- task: SqlAzureDacpacDeployment@1
+  inputs:
+    azureSubscription: 'Azure subscription 1(c731920e-f389-4198-98b9-bb54ff8f6bde)'
+    AuthenticationType: 'server'
+    ServerName: '$(clientname).database.windows.net'
+    DatabaseName: '$(clientname)'
+    SqlUsername: 'ranjit1'
+    SqlPassword: 'testSQL123abc!@#'
+    deployType: 'DacpacTask'
+    DeploymentAction: 'Publish'
+    DacpacFile: '$(Agent.TempDirectory)'
+    IpDetectionMethod: 'AutoDetect'
