@@ -2,7 +2,7 @@ resources:
   repositories:
     - repository: BasicDatabaseAutomationTest
       type: github
-      endpoint: 998ee78f-5c3e-42f7-9bb5-adb92d862d04
+      endpoint: ranjitk92
       name: ranjitk92/BasicDatabaseAutomationTest
 
 trigger:
