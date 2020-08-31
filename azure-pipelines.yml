@@ -26,7 +26,7 @@ steps:
 - task: CmdLine@2
   displayName: Download DACPAC into Agent.TempDirectory
   inputs:
-    script: 'mkdir TempDownload;cd ./TempDownload;curl -OL https://github.com/ranjitk92/TemplateDACPACTest/raw/master/basicdatabase.dacpac'
+    script: curl -OL https://github.com/ranjitk92/TemplateDACPACTest/raw/master/basicdatabase.dacpac'
   
 - task: SqlAzureDacpacDeployment@1
   inputs:
@@ -38,5 +38,5 @@ steps:
     SqlPassword: 'testSQL123abc!@#'
     deployType: 'DacpacTask'
     DeploymentAction: 'Publish'
-    DacpacFile: '$(Agent.TempDirectory)'
+    DacpacFile: '**/*.dacpac'
     IpDetectionMethod: 'AutoDetect'
