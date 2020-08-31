@@ -19,7 +19,7 @@ steps:
   displayName: Creating clientname and clientvariable pairing
   inputs:
     targetType: 'inline'
-    script: 'Install-Module ImportExcel -Scope CurrentUser -Force;$clientvar = Import-Excel **\*.xlsm | Select-Object -ExpandProperty ClientName;Write-Host "##vso[task.setvariable variable=clientname]$clientvar"'
+    script: 'Install-Module ImportExcel -Scope CurrentUser -Force;$clientvar = Import-Excel **\ClientTestListwithMacro.xlsm | Select-Object -ExpandProperty ClientName;Write-Host "##vso[task.setvariable variable=clientname]$clientvar"'
 - task: AzureResourceManagerTemplateDeployment@3
   inputs:
     deploymentScope: 'Resource Group'
@@ -32,17 +32,7 @@ steps:
     csmFileLink: 'https://raw.githubusercontent.com/ranjitk92/ARMtemplates/master/azuredeploySQLserver_db_storagecontainer.json'
     overrideParameters: '-SQLname $(clientname) -DBname $(clientname) -blobstoragecontainer $(clientname) -clienttag $(clientname)'
     deploymentMode: 'Incremental'
-  
-- task: CmdLine@2
-  displayName: Download DACPAC
-  inputs:
-    script: 'curl -OL https://raw.githubusercontent.com/ranjitk92/BasicDatabaseAutomationTest/master/BasicDatabase.sqlproj'
-  
-- task: CmdLine@2
-  displayName: Download DACPAC
-  inputs:
-    script: 'curl -OL https://raw.githubusercontent.com/ranjitk92/BasicDatabaseAutomationTest/master/BasicDatabase.sln'
-  
+
 - task: VSBuild@1
   inputs:
     solution: '**\*.sln'
