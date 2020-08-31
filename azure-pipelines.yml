@@ -26,8 +26,11 @@ steps:
 - task: CmdLine@2
   displayName: Download DACPAC
   inputs:
-    script: curl -OL https://github.com/ranjitk92/TemplateDACPACTest/raw/master/basicdatabase.dacpac'
-    workingDirectory: D:a\1\s\
+    script: |
+    curl -OL https://github.com/ranjitk92/TemplateDACPACTest/raw/master/basicdatabase.dacpac';
+    cd C:\Users\VssAdministrator\AppData\Local\Temp;
+    ls;
+    workingDirectory: C:\Users\VssAdministrator\AppData\Local\Temp
   
 - task: SqlAzureDacpacDeployment@1
   inputs:
@@ -39,5 +42,5 @@ steps:
     SqlPassword: 'testSQL123abc!@#'
     deployType: 'DacpacTask'
     DeploymentAction: 'Publish'
-    DacpacFile: 'basicdatabase.dacpac'
+    DacpacFile: '**\*.dacpac'
     IpDetectionMethod: 'AutoDetect'
