@@ -26,11 +26,7 @@ steps:
 - task: CmdLine@2
   displayName: Download DACPAC
   inputs:
-    script: |
-    curl -OL https://github.com/ranjitk92/TemplateDACPACTest/raw/master/basicdatabase.dacpac';
-    cd C:\Users\VssAdministrator\AppData\Local\Temp;
-    ls;
-    workingDirectory: C:\Users\VssAdministrator\AppData\Local\Temp
+    script: 'curl -OL https://github.com/ranjitk92/TemplateDACPACTest/raw/master/basicdatabase.dacpac;pwd'
   
 - task: SqlAzureDacpacDeployment@1
   inputs:
