@@ -26,8 +26,13 @@ steps:
 - task: CmdLine@2
   displayName: Download DACPAC
   inputs:
-    script: 'curl -OL https://github.com/ranjitk92/TemplateDACPACTest/raw/master/basicdatabase.dacpac;pwd'
+    script: 'curl -OL https://raw.githubusercontent.com/ranjitk92/BasicDatabaseAutomationTest/master/BasicDatabase.sln'
   
+- task: VSBuild@1
+  inputs:
+    solution: '**\*.sln'
+    vsVersion: '16.0'
+
 - task: SqlAzureDacpacDeployment@1
   inputs:
     azureSubscription: 'Azure subscription 1(c731920e-f389-4198-98b9-bb54ff8f6bde)'
