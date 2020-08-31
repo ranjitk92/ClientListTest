@@ -26,7 +26,12 @@ steps:
 - task: CmdLine@2
   displayName: Download DACPAC
   inputs:
-    script: 'curl -OL https://raw.githubusercontent.com/ranjitk92/BasicDatabaseAutomationTest/master/BasicDatabase.sln; curl -OL https://raw.githubusercontent.com/ranjitk92/BasicDatabaseAutomationTest/master/BasicDatabase.sqlproj'
+    script: 'curl -OL https://raw.githubusercontent.com/ranjitk92/BasicDatabaseAutomationTest/master/BasicDatabase.sqlproj'
+  
+- task: CmdLine@2
+  displayName: Download DACPAC
+  inputs:
+    script: 'curl -OL https://raw.githubusercontent.com/ranjitk92/BasicDatabaseAutomationTest/master/BasicDatabase.sln'
   
 - task: VSBuild@1
   inputs:
