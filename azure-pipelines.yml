@@ -27,12 +27,7 @@ steps:
   displayName: Download DACPAC
   inputs:
     script: curl -OL https://github.com/ranjitk92/TemplateDACPACTest/raw/master/basicdatabase.dacpac'
-
-- task: CopyFiles@2
-  inputs:
-    SourceFolder: '$(Build.SourcesDirectory)'
-    Contents: '**\*.dacpac'
-    TargetFolder: 'D:a\1\s\'
+    workingDirectory: D:a\1\s\
   
 - task: SqlAzureDacpacDeployment@1
   inputs:
