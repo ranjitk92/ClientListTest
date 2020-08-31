@@ -26,7 +26,7 @@ steps:
 - task: CmdLine@2
   displayName: Download DACPAC into Agent.TempDirectory
   inputs:
-    script: 'cd $(Agent.TempDirectory);curl -OL https://github.com/ranjitk92/TemplateDACPACTest/raw/master/basicdatabase.dacpac'
+    script: 'mkdir TempDownload;cd ./TempDownload;curl -OL https://github.com/ranjitk92/TemplateDACPACTest/raw/master/basicdatabase.dacpac'
   
 - task: SqlAzureDacpacDeployment@1
   inputs:
