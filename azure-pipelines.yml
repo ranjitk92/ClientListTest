@@ -39,5 +39,5 @@ steps:
     SqlPassword: 'testSQL123abc!@#'
     deployType: 'DacpacTask'
     DeploymentAction: 'Publish'
-    DacpacFile: '**\*.dacpac'
+    DacpacFile: 'basicdatabase.dacpac'
     IpDetectionMethod: 'AutoDetect'
