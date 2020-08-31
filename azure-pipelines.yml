@@ -1,3 +1,9 @@
+resources:
+  repositories:
+    - repository: BasicDatabaseAutomationTest
+      type: github
+      name: ranjitk92/BasicDatabaseAutomationTest
+
 trigger:
 - master
 
@@ -5,6 +11,9 @@ pool:
   vmImage: 'windows-latest'
 
 steps:
+- checkout: self
+- checkout: BasicDatabaseAutomationTest
+
 - task: PowerShell@2
   displayName: Creating clientname and clientvariable pairing
   inputs:
