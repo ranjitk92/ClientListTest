@@ -43,7 +43,7 @@ steps:
     azureSubscription: 'Azure subscription 1(c731920e-f389-4198-98b9-bb54ff8f6bde)'
     AuthenticationType: 'server'
     ServerName: '$(clientname).database.windows.net'
-    DatabaseName: '$(clientname)'
+    DatabaseName: "[concat(($clientname),'database')]"
     SqlUsername: 'ranjit1'
     SqlPassword: 'testSQL123abc!@#'
     deployType: 'DacpacTask'
