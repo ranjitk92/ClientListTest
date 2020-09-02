@@ -4,6 +4,10 @@ resources:
       type: github
       endpoint: ranjitk92
       name: ranjitk92/BasicDatabaseAutomationTest
+    - repository: TemplateDACPACTest
+      type: github
+      endpoint: ranjitk92
+      name: ranjitk92/TemplateDACPACTest
 
 trigger:
 - master
@@ -14,6 +18,7 @@ pool:
 steps:
 - checkout: self
 - checkout: BasicDatabaseAutomationTest
+- checkout: TemplateDACPACTest
 
 - task: PowerShell@2
   displayName: Creating clientname and clientvariable pairing
@@ -33,10 +38,7 @@ steps:
     overrideParameters: '-SQLname $(clientname) -DBname $(clientname) -blobstoragecontainer $(clientname) -clienttag $(clientname)'
     deploymentMode: 'Incremental'
 
-- task: VSBuild@1
-  inputs:
-    solution: '**\*.sln'
-    vsVersion: '16.0'
+
 
 - task: SqlAzureDacpacDeployment@1
   inputs:
