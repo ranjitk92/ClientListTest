@@ -47,7 +47,7 @@ steps:
     ServerName: '$(clientname).database.windows.net'
     DatabaseName: '$(clientname)database'
     SqlUsername: 'ranjit1'
-    SqlPassword: 'testSQL123abc!@#'
+    SqlPassword: '-administratorPassword'
     deployType: 'DacpacTask'
     DeploymentAction: 'Publish'
     DacpacFile: '**\*.dacpac'
