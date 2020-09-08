@@ -40,6 +40,13 @@ steps:
     solution: '**\*.sln'
     vsVersion: '16.0'
 
+- task: AzureKeyVault@1
+  inputs:
+    azureSubscription: 'Azure subscription 1(c731920e-f389-4198-98b9-bb54ff8f6bde)'
+    KeyVaultName: 'SQLDBlogin'
+    SecretsFilter: 'SQLDBlogin'
+    RunAsPreJob: false
+
 - task: SqlAzureDacpacDeployment@1
   inputs:
     azureSubscription: 'Azure subscription 1(c731920e-f389-4198-98b9-bb54ff8f6bde)'
@@ -47,7 +54,7 @@ steps:
     ServerName: '$(clientname).database.windows.net'
     DatabaseName: '$(clientname)database'
     SqlUsername: 'ranjit1'
-    SqlPassword: '-administratorPassword'
+    SqlPassword: '$(administratorPassword)'
     deployType: 'DacpacTask'
     DeploymentAction: 'Publish'
     DacpacFile: '**\*.dacpac'
