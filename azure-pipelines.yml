@@ -20,6 +20,7 @@ steps:
   inputs:
     targetType: 'inline'
     script: 'Install-Module ImportExcel -Scope CurrentUser -Force;$clientvar = Import-Excel **\ClientTestListwithMacro.xlsm | Select-Object -ExpandProperty ClientName;Write-Host "##vso[task.setvariable variable=clientname]$clientvar"'
+    
 - task: AzureResourceManagerTemplateDeployment@3
   inputs:
     deploymentScope: 'Resource Group'
@@ -27,9 +28,10 @@ steps:
     subscriptionId: 'c731920e-f389-4198-98b9-bb54ff8f6bde'
     action: 'Create Or Update Resource Group'
     resourceGroupName: 'RgPStest'
-    location: 'East US'
+    location: 'Central US'
     templateLocation: 'URL of the file'
     csmFileLink: 'https://raw.githubusercontent.com/ranjitk92/ARMtemplates/master/azuredeploySQLserver_db_storagecontainer.json'
+    csmParametersFileLink: 'https://raw.githubusercontent.com/ranjitk92/ARMtemplates/master/KeyVaultParameters.json'
     overrideParameters: '-SQLname $(clientname) -DBname $(clientname) -blobstoragecontainer $(clientname) -clienttag $(clientname)'
     deploymentMode: 'Incremental'
 
