@@ -1,3 +1,10 @@
+resources:
+  repositories:
+    - repository: BasicDatabaseAutomationTest
+      type: github
+      endpoint: ranjitk92
+      name: ranjitk92/BasicDatabaseAutomationTest
+
 trigger:
 - master
 
@@ -5,38 +12,50 @@ pool:
   vmImage: 'windows-latest'
 
 steps:
+- checkout: self
+- checkout: BasicDatabaseAutomationTest
+
 - task: PowerShell@2
   displayName: Creating clientname and clientvariable pairing
   inputs:
     targetType: 'inline'
-    script: 'Install-Module ImportExcel -Scope CurrentUser -Force;$clientvar = Import-Excel $(Build.Repository.LocalPath)/ClientTestListwithMacro.xlsm | Select-Object -ExpandProperty ClientName;Write-Host "##vso[task.setvariable variable=clientname]$clientvar"'
+    script: 'Install-Module ImportExcel -Scope CurrentUser -Force;$clientvar = Import-Excel **\ClientTestListwithMacro.xlsm | Select-Object -ExpandProperty ClientName;Write-Host "##vso[task.setvariable variable=clientname]$clientvar"'
+    
 - task: AzureResourceManagerTemplateDeployment@3
   inputs:
     deploymentScope: 'Resource Group'
-    azureResourceManagerConnection: 'Azure subscription 1(a42ec7cd-86ed-431d-be1a-45fd92b2f25b)'
-    subscriptionId: 'a42ec7cd-86ed-431d-be1a-45fd92b2f25b'
+    azureResourceManagerConnection: 'Azure subscription 1(c731920e-f389-4198-98b9-bb54ff8f6bde)'
+    subscriptionId: 'c731920e-f389-4198-98b9-bb54ff8f6bde'
     action: 'Create Or Update Resource Group'
     resourceGroupName: 'RgPStest'
-    location: 'East US'
+    location: 'Central US'
     templateLocation: 'URL of the file'
     csmFileLink: 'https://raw.githubusercontent.com/ranjitk92/ARMtemplates/master/azuredeploySQLserver_db_storagecontainer.json'
+    csmParametersFileLink: 'https://raw.githubusercontent.com/ranjitk92/ARMtemplates/master/KeyVaultParameters.json'
     overrideParameters: '-SQLname $(clientname) -DBname $(clientname) -blobstoragecontainer $(clientname) -clienttag $(clientname)'
     deploymentMode: 'Incremental'
-  
-- task: CmdLine@2
-  displayName: Download DACPAC into Agent.TempDirectory
+
+- task: VSBuild@1
   inputs:
-    script: 'cd $(Agent.TempDirectory);curl -OL https://github.com/ranjitk92/TemplateDACPACTest/raw/master/basicdatabase.dacpac'
-  
+    solution: '**\*.sln'
+    vsVersion: '16.0'
+
+- task: AzureKeyVault@1
+  inputs:
+    azureSubscription: 'Azure subscription 1(c731920e-f389-4198-98b9-bb54ff8f6bde)'
+    KeyVaultName: 'SQLDBlogin'
+    SecretsFilter: 'SQLDBlogin'
+    RunAsPreJob: false
+
 - task: SqlAzureDacpacDeployment@1
   inputs:
     azureSubscription: 'Azure subscription 1(c731920e-f389-4198-98b9-bb54ff8f6bde)'
     AuthenticationType: 'server'
     ServerName: '$(clientname).database.windows.net'
-    DatabaseName: '$(clientname)'
+    DatabaseName: '$(clientname)database'
     SqlUsername: 'ranjit1'
-    SqlPassword: 'testSQL123abc!@#'
+    SqlPassword: '$(SQLDBlogin)'
     deployType: 'DacpacTask'
     DeploymentAction: 'Publish'
-    DacpacFile: '$(Agent.TempDirectory)'
+    DacpacFile: '**\*.dacpac'
     IpDetectionMethod: 'AutoDetect'
