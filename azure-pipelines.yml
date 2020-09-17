@@ -34,7 +34,7 @@ steps:
     csmParametersFileLink: 'https://raw.githubusercontent.com/ranjitk92/ARMtemplates/master/KeyVaultParameters.json'
     overrideParameters: '-SQLname $(clientname) -DBname $(clientname) -blobstoragecontainer $(clientname) -clienttag $(clientname)'
     deploymentMode: 'Incremental'
-    deploymentName: "Creating SQL Server, Database, and Blob Storage Container"
+    deploymentName: 'Creating resources based on clientname variable'
 
 - task: VSBuild@1
   inputs:
