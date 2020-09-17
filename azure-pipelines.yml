@@ -34,6 +34,7 @@ steps:
     csmParametersFileLink: 'https://raw.githubusercontent.com/ranjitk92/ARMtemplates/master/KeyVaultParameters.json'
     overrideParameters: '-SQLname $(clientname) -DBname $(clientname) -blobstoragecontainer $(clientname) -clienttag $(clientname)'
     deploymentMode: 'Incremental'
+    deploymentName: "Creating SQL Server, Database, and Blob Storage Container"
 
 - task: VSBuild@1
   inputs:
@@ -59,3 +60,17 @@ steps:
     DeploymentAction: 'Publish'
     DacpacFile: '**\*.dacpac'
     IpDetectionMethod: 'AutoDetect'
+
+- task: AzureResourceManagerTemplateDeployment@3
+  inputs:
+    deploymentScope: 'Resource Group'
+    azureResourceManagerConnection: 'Azure subscription 1(c731920e-f389-4198-98b9-bb54ff8f6bde)'
+    subscriptionId: 'c731920e-f389-4198-98b9-bb54ff8f6bde'
+    action: 'Create Or Update Resource Group'
+    resourceGroupName: 'ADFTestRK'
+    location: 'East US'
+    templateLocation: 'URL of the file'
+    csmFileLink: 'https://raw.githubusercontent.com/ranjitk92/ARMtemplates/master/ADFdeploy.json'
+    overrideParameters: '-factoryName $(clientname)'
+    deploymentMode: 'Incremental'
+    deploymentName: 'Creating Azure Data Factory'
