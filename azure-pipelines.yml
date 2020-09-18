@@ -20,7 +20,7 @@ steps:
   inputs:
     targetType: 'inline'
     script: 'Install-Module ImportExcel -Scope CurrentUser -Force;$clientvar = Import-Excel **\ClientTestListwithMacro.xlsm | Select-Object -ExpandProperty ClientName;Write-Host "##vso[task.setvariable variable=clientname]$clientvar"'
-    
+  enabled: false
 - task: AzureResourceManagerTemplateDeployment@3
   displayName: Deploying SQL server, Database, and Blob Storage Container
   inputs:
@@ -35,11 +35,13 @@ steps:
     csmParametersFileLink: 'https://raw.githubusercontent.com/ranjitk92/ARMtemplates/master/KeyVaultParameters.json'
     overrideParameters: '-SQLname $(clientname) -DBname $(clientname) -blobstoragecontainer $(clientname) -clienttag $(clientname)'
     deploymentMode: 'Incremental'
+  enabled: false  
 
 - task: VSBuild@1
   inputs:
     solution: '**\*.sln'
     vsVersion: '16.0'
+  enabled: false 
 
 - task: AzureKeyVault@1
   inputs:
@@ -47,6 +49,7 @@ steps:
     KeyVaultName: 'SQLDBlogin'
     SecretsFilter: 'SQLDBlogin'
     RunAsPreJob: false
+  enabled: false  
 
 - task: SqlAzureDacpacDeployment@1
   inputs:
@@ -60,6 +63,7 @@ steps:
     DeploymentAction: 'Publish'
     DacpacFile: '**\*.dacpac'
     IpDetectionMethod: 'AutoDetect'
+  enabled: false  
 
 - task: AzureResourceManagerTemplateDeployment@3
   displayName: Deploying Azure Data Factory
@@ -74,3 +78,4 @@ steps:
     csmFileLink: 'https://raw.githubusercontent.com/ranjitk92/ARMtemplates/master/ADFdeploy.json'
     overrideParameters: '-factoryName $(clientname)'
     deploymentMode: 'Incremental'
+  enabled: true  
