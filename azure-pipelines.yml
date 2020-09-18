@@ -20,7 +20,7 @@ steps:
   inputs:
     targetType: 'inline'
     script: 'Install-Module ImportExcel -Scope CurrentUser -Force;$clientvar = Import-Excel **\ClientTestListwithMacro.xlsm | Select-Object -ExpandProperty ClientName;Write-Host "##vso[task.setvariable variable=clientname]$clientvar"'
-  enabled: false
+  enabled: true
 - task: AzureResourceManagerTemplateDeployment@3
   displayName: Deploying SQL server, Database, and Blob Storage Container
   inputs:
