@@ -21,8 +21,9 @@ steps:
     targetType: 'inline'
     script: 'Install-Module ImportExcel -Scope CurrentUser -Force;$clientvar = Import-Excel **\ClientTestListwithMacro.xlsm | Select-Object -ExpandProperty ClientName;Write-Host "##vso[task.setvariable variable=clientname]$clientvar"'
   enabled: true
+
 - task: AzureResourceManagerTemplateDeployment@3
-  displayName: Deploying SQL server, Database, and Blob Storage Container
+  displayName: Deploying SQL server, Database, Storage Container, ADF, and Linked Services
   inputs:
     deploymentScope: 'Resource Group'
     azureResourceManagerConnection: 'Azure subscription 1(c731920e-f389-4198-98b9-bb54ff8f6bde)'
@@ -31,17 +32,17 @@ steps:
     resourceGroupName: 'RgPStest'
     location: 'Central US'
     templateLocation: 'URL of the file'
-    csmFileLink: 'https://raw.githubusercontent.com/ranjitk92/ARMtemplates/master/azuredeploySQLserver_db_storagecontainer.json'
+    csmFileLink: 'https://raw.githubusercontent.com/ranjitk92/ARMtemplates/master/QuaXigma_SQLServer_DB_StorageContainer_ADF.json'
     csmParametersFileLink: 'https://raw.githubusercontent.com/ranjitk92/ARMtemplates/master/KeyVaultParameters.json'
-    overrideParameters: '-SQLname $(clientname) -DBname $(clientname) -blobstoragecontainer $(clientname) -clienttag $(clientname)'
+    overrideParameters: '-SQLname $(clientname) -DBname $(clientname) -blobstoragecontainer $(clientname) -clienttag $(clientname) -factoryName $(clientname)'
     deploymentMode: 'Incremental'
-  enabled: false  
+  enabled: true  
 
 - task: VSBuild@1
   inputs:
     solution: '**\*.sln'
     vsVersion: '16.0'
-  enabled: false 
+  enabled: true 
 
 - task: AzureKeyVault@1
   inputs:
@@ -49,7 +50,7 @@ steps:
     KeyVaultName: 'SQLDBlogin'
     SecretsFilter: 'SQLDBlogin'
     RunAsPreJob: false
-  enabled: false  
+  enabled: true  
 
 - task: SqlAzureDacpacDeployment@1
   inputs:
@@ -63,19 +64,4 @@ steps:
     DeploymentAction: 'Publish'
     DacpacFile: '**\*.dacpac'
     IpDetectionMethod: 'AutoDetect'
-  enabled: false  
-
-- task: AzureResourceManagerTemplateDeployment@3
-  displayName: Deploying Azure Data Factory
-  inputs:
-    deploymentScope: 'Resource Group'
-    azureResourceManagerConnection: 'Azure subscription 1(c731920e-f389-4198-98b9-bb54ff8f6bde)'
-    subscriptionId: 'c731920e-f389-4198-98b9-bb54ff8f6bde'
-    action: 'Create Or Update Resource Group'
-    resourceGroupName: 'ADFTestRK'
-    location: 'East US'
-    templateLocation: 'URL of the file'
-    csmFileLink: 'https://raw.githubusercontent.com/ranjitk92/ARMtemplates/master/ADFdeploy.json'
-    overrideParameters: '-factoryName $(clientname)'
-    deploymentMode: 'Incremental'
-  enabled: true  
+  enabled: true
