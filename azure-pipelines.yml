@@ -26,8 +26,8 @@ steps:
   displayName: Deploying SQL server, Database, Storage Container, ADF, and Linked Services
   inputs:
     deploymentScope: 'Resource Group'
-    azureResourceManagerConnection: 'Azure subscription 1(c731920e-f389-4198-98b9-bb54ff8f6bde)'
-    subscriptionId: 'c731920e-f389-4198-98b9-bb54ff8f6bde'
+    azureResourceManagerConnection: 'Azure subscription 1(ca4c7cc2-45ba-40d6-888e-34751874ab55)'
+    subscriptionId: 'ca4c7cc2-45ba-40d6-888e-34751874ab55'
     action: 'Create Or Update Resource Group'
     resourceGroupName: 'RgPStest'
     location: 'Central US'
@@ -46,15 +46,15 @@ steps:
 
 - task: AzureKeyVault@1
   inputs:
-    azureSubscription: 'Azure subscription 1(c731920e-f389-4198-98b9-bb54ff8f6bde)'
+    azureSubscription: 'Azure subscription 1(ca4c7cc2-45ba-40d6-888e-34751874ab55)'
     KeyVaultName: 'SQLDBlogin'
     SecretsFilter: 'SQLDBlogin'
     RunAsPreJob: false
-  enabled: true  
+  enabled: false
 
 - task: SqlAzureDacpacDeployment@1
   inputs:
-    azureSubscription: 'Azure subscription 1(c731920e-f389-4198-98b9-bb54ff8f6bde)'
+    azureSubscription: 'Azure subscription 1(ca4c7cc2-45ba-40d6-888e-34751874ab55)'
     AuthenticationType: 'server'
     ServerName: '$(clientname).database.windows.net'
     DatabaseName: '$(clientname)database'
@@ -64,4 +64,4 @@ steps:
     DeploymentAction: 'Publish'
     DacpacFile: '**\*.dacpac'
     IpDetectionMethod: 'AutoDetect'
-  enabled: true
+  enabled: false
