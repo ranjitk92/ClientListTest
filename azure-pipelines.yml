@@ -58,7 +58,7 @@ steps:
     AuthenticationType: 'server'
     ServerName: '$(clientname).database.windows.net'
     DatabaseName: '$(clientname)database'
-    SqlUsername: 'ranjit1'
+    SqlUsername: 'QuaXigmalogin'
     SqlPassword: '$(SQLDBlogin)'
     deployType: 'DacpacTask'
     DeploymentAction: 'Publish'
