@@ -50,7 +50,7 @@ steps:
     KeyVaultName: 'SQLDBlogin'
     SecretsFilter: 'SQLDBlogin'
     RunAsPreJob: false
-  enabled: false
+  enabled: true
 
 - task: SqlAzureDacpacDeployment@1
   inputs:
@@ -64,4 +64,4 @@ steps:
     DeploymentAction: 'Publish'
     DacpacFile: '**\*.dacpac'
     IpDetectionMethod: 'AutoDetect'
-  enabled: false
+  enabled: true
